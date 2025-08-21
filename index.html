@@ -339,5 +339,39 @@
     setInterval(updateCountdowns, 1000);
     updateCountdowns();
   </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyC5PRsrlWsXxWvAN0butuC8jL81xveS9UI",
+      authDomain: "perfect-countdowns---public.firebaseapp.com",
+      projectId: "perfect-countdowns---public",
+      storageBucket: "perfect-countdowns---public.firebasestorage.app",
+      messagingSenderId: "61334374176",
+      appId: "1:61334374176:web:ba7639dd7ad676c300b945",
+      measurementId: "G-FSNPFQD8BH"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const countdownsRef = collection(db, "countdowns");
+
+    // Atualiza a interface sempre que houver alterações na base de dados
+    onSnapshot(countdownsRef, (snapshot) => {
+      const container = document.getElementById("countdownContainer");
+      container.innerHTML = "";
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const div = document.createElement("div");
+        div.className = "countdown";
+        div.innerHTML = `
+          <div class="title">${data.title}</div>
+          <div class="date">${data.date} ${data.time}</div>
+        `;
+        container.appendChild(div);
+      });
+    });
+  </script>
 </body>
 </html>
