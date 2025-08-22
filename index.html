@@ -175,11 +175,11 @@
 <body>
   <div id="topBar">
     <form id="countdownForm" class="hidden">
-      <input type="text" id="title" placeholder="Nome do evento" required />
+      <input type="text" id="title" placeholder="Event Name" required />
       <input type="datetime-local" id="date" required />
       <input type="color" id="color" value="#007BFF" />
       <input type="color" id="textColor" value="#ffffff" />
-      <button type="submit">Adicionar</button>
+      <button type="submit">ADD</button>
     </form>
 
     <div id="controls" class="hidden">
@@ -190,7 +190,7 @@
       <button onclick="setColumns(5)">☷</button>
     </div>
 
-    <button id="creatorUnlock" onclick="requestPIN()">🔒 Criador (DJ_tutti)</button>
+    <button id="creatorUnlock" onclick="requestPIN()">🔒 Creator (DJ_tutti)</button>
     <button id="modeToggle" onclick="toggleMode()">☀</button>
   </div>
 
@@ -226,16 +226,16 @@
     }
 
     function requestPIN() {
-      const entered = prompt("Introduz o PIN para editar:");
+      const entered = prompt("P I N");
       if (entered === PIN) {
         canEdit = true;
-        alert("Acesso concedido.");
+        alert("ACCESS GRANTED   DJ_tutti ");
         creatorBtn.classList.add("hidden");
         form.classList.remove("hidden");
         controls.classList.remove("hidden");
         updateCountdowns();
       } else {
-        alert("PIN incorreto.");
+        alert("ACCESS DENIED");
       }
     }
 
@@ -247,10 +247,10 @@
 
     function editCountdown(index) {
       const cd = countdowns[index];
-      const newTitle = prompt("Novo nome:", cd.title) || cd.title;
-      const newDate = prompt("Nova data (YYYY-MM-DD HH:MM):", cd.date.replace("T", " ")) || cd.date;
-      const newColor = prompt("Nova cor (#hex):", cd.color) || cd.color;
-      const newTextColor = prompt("Nova cor do texto (#hex):", cd.textColor || '#ffffff') || cd.textColor;
+      const newTitle = prompt("New name:", cd.title) || cd.title;
+      const newDate = prompt("New date (YYYY-MM-DD HH:MM):", cd.date.replace("T", " ")) || cd.date;
+      const newColor = prompt("New color (#hex):", cd.color) || cd.color;
+      const newTextColor = prompt("New text color (#hex):", cd.textColor || '#ffffff') || cd.textColor;
 
       countdowns[index] = { title: newTitle, date: newDate, color: newColor, textColor: newTextColor };
       saveCountdowns();
@@ -258,7 +258,7 @@
     }
 
     function formatTime(diff) {
-      if (diff <= 0) return 'Finalizado!';
+      if (diff <= 0) return 'Finished!';
 
       const msPerMonth = 1000 * 60 * 60 * 24 * 30.44;
       const msPerDay = 1000 * 60 * 60 * 24;
@@ -317,7 +317,7 @@
     form.addEventListener('submit', e => {
       e.preventDefault();
       if (!canEdit) {
-        alert("Apenas o criador pode adicionar eventos.");
+        alert("Only the Creator can add events.");
         return;
       }
 
